@@ -1,5 +1,5 @@
 from sqlalchemy.sql.expression import select
-from ..schema import content_facebook
+from schema import content_facebook
 
 columns = content_facebook.c
 serialize_columns = [
@@ -59,17 +59,13 @@ def filter_items(conn, from_date=None, end_date=None, fb_accounts=None):
     select_query = select(columns=serialize_columns)
 
     if(from_date is not None):
-        print "adding from date query"
         select_query = select_query.where(content_facebook.c.created_date > from_date);
 
     if(end_date is not None):
-        print "adding end_date date query"
         select_query = select_query.where(content_facebook.c.created_date < end_date);
 
     if(fb_accounts is not None):
         select_query = select_query.where(content_facebook.c.fb_account.in_(fb_accounts))
-
-    print "running query %s" % str(select_query)
 
     return [dict(d.items()) for d in conn.execute(select_query).fetchall()]
 
