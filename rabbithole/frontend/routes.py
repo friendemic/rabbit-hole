@@ -1,8 +1,9 @@
-from app import app
-from rabbithole_api import RabbitholeApi
 import json
 import backend.util
 import dateutil.parser
+from app import app
+from rabbithole_api import RabbitholeApi
+from config import backend_url
 from flask import render_template, request
 
 @app.route("/")
@@ -10,7 +11,7 @@ def home():
     display_fields = [
         'picture', 'created_date', 'message', 'comments', 'fb_account', 'is_self'
     ];
-    api = RabbitholeApi('http://localhost:5000')
+    api = RabbitholeApi(backend_url)
     from_date = request.args.get('from_date')
     end_date = request.args.get('end_date')
     fb_accounts = request.args.get('fb_accounts')
