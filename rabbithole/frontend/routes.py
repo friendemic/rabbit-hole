@@ -6,6 +6,10 @@ from rabbithole_api import RabbitholeApi
 from config import backend_url
 from flask import render_template, request
 
+@app.route("/about")
+def about():
+    return render_template('home/about.html')
+
 @app.route("/")
 def home():
     display_fields = [

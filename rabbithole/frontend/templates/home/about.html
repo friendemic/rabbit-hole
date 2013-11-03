@@ -1,10 +1,27 @@
-{% extends 'layout.twig' %}
+{% extends 'layout.html' %}
 
 {% block content %}
-<p>Here are some thoughts on how this thing works.
-<p>Although some of the backend components are perhaps a bit more general than is necessary, I had some reasoning behind it. I tried to approach this project as I would any other internal tool, which would require extension and modification over time.
-<p>So, I designed this with that in mind. In a real setting, I'd have likely used an existing web framework, rather than building up the tiny little not-really-a-framework thing I've built here. But that would have been even more overkill than the current thing is.
-<p>The graph is pretty cool. We try to convert the times to the timezone reported by your browser. I'm fairly certain it works.
+<div id="content">
+    <div class="row">
+        <p>Available query string values:
+        <dl>
+            <dt>from_date</dt>
+            <dd>Earliest date to retrieve data from (formatted Y-m-d H:i:s)</dd>
+            <dt>end_date</dt>
+            <dd>Latest date to retrieve data from (formatted Y-m-d H:i:s)</dd>
+            <dt>fb_accounts</dt>
+            <dd>Comma-separated list of Facebook account number to retrieve data from</dd>
+            <dt>limit</dt>
+            <dd>Maximum number of items to retrieve</dd>
+            <dt>offset</dt>
+            <dd>What index to start retrieving data from (used for paging, coupled with limit)</dd>
+        </dl>
+        <p>Date formatting is pretty loose. Something like Y-m-dTH:i:s would work fine.
+        <p>Examples
+        <p><a href="/?from_date=2013-10-01T12:00:00">Since 2013-10-01T12:00:00</a>
+        <p><a href="/?end_date=2012-01-01T12:00:00">Before 2012-01-01T12:00:00</a>
+        <p><a href="/?from_date=2012-01-01&end_date=2012-12-31T12:00:00">In the year 2012</a>
+        <p><a href="/?from_date=2012-01-01&end_date=2012-12-31T12:00:00&fb_accounts=146585512018715,17811601&limit=10">In the year 2012, from the Facebook accounts 146585512018715 and 17811601, limit of 10</a>
+    </div>
+</div>
 {% endblock %}
-
-{% block sidebar %}{% endblock %}
