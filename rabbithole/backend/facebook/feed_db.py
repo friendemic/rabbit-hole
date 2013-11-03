@@ -1,5 +1,5 @@
 from sqlalchemy.sql.expression import select
-from schema import content_facebook
+from ..schema import content_facebook
 
 columns = content_facebook.c
 serialize_columns = [
@@ -44,7 +44,7 @@ def item_exists(conn, item):
     result = conn.execute(select_query, id=item.get('id'))
     return result.fetchone() is not None
 
-def filter_items(conn, from_date=None, end_date=None, fb_accounts=None):
+def filter_items(conn, limit=None, offset=None, from_date=None, end_date=None, fb_accounts=None):
     """Query the DB for feed items.
 
     Args:
@@ -66,6 +66,12 @@ def filter_items(conn, from_date=None, end_date=None, fb_accounts=None):
 
     if(fb_accounts is not None):
         select_query = select_query.where(content_facebook.c.fb_account.in_(fb_accounts))
+
+    if(limit is not None):
+        select_query = select_query.limit(int(limit))
+
+    if(offset is not None):
+        select_query = select_query.offset(int(offset))
 
     return [dict(d.items()) for d in conn.execute(select_query).fetchall()]
 

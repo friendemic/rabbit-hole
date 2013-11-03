@@ -17,7 +17,7 @@ content_facebook = Table('content_facebook', metadata,
                          Column('data', Text),
                          mysql_engine='InnoDB',
                          mysql_charset='utf8'
-                         )
+)
 
 
 def update_schema(engine):

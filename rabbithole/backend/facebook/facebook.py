@@ -2,7 +2,7 @@ import requests
 import urlparse
 import dateutil.parser
 import json
-import config
+from ..config import facebook as facebook_config
 
 
 class FacebookUtil:
@@ -43,7 +43,15 @@ class FacebookUtil:
 
 class FacebookFeedApi:
 
-    """Simplified access to the Feed api"""
+    """Simplified access to the Feed api
+
+       util is a FacebookUtil
+
+       fields are formatted for use in the JsonParser, see that class for
+       format documentation
+
+       page_size is the size of the page to request from the facebook feed api
+    """
 
     def __init__(self, util, fields, page_size=100):
         self.util = util
@@ -54,6 +62,7 @@ class FacebookFeedApi:
         return self.util.get_user_url("feed")
 
     def feed(self, page_size=None):
+
         """Pages through the feed, yielding each page
         to the caller.
 
@@ -76,6 +85,7 @@ class FacebookFeedApi:
             yield self.parse_feed(response_data.get('data'))
 
     def parse_feed(self, feed_json):
+
         """Instantiates a JsonParser with the fields defined for this
         object, and parses all the items in the provided dict
         """
@@ -183,7 +193,7 @@ class JsonParser:
         if action is 'len':
             return 0 if resolved_item is None else len(resolved_item)
         if action is 'is_self':
-            return self.resolve_descent(item, ['from', 'id']) == config.facebook['account_number']
+            return self.resolve_descent(item, ['from', 'id']) == facebook_config['account_number']
         if action is 'full_item_text':
             return json.dumps(item)
 
