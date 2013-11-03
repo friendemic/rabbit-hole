@@ -1,4 +1,3 @@
-import backend.schema
 from api.app import app
 from api import facebook_routes
 
