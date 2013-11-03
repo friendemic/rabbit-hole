@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div id="content">
+    <table class="table">
+        <thead>
+            <tr>
+            {% for field in fields %}
+            <th>{{ field }}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in feed_items %}
+            <tr>
+                {% for field in fields %}
+                    <td>
+                    {% if field == 'picture' %}
+                    <a href="{{item[field]}}">
+                        <img src="{{ item[field] }}" class="profile_image"></img>
+                    </a>
+                    {% else %}
+                    {{ item[field] }}
+                    {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block sidebar %}
+{% endblock %}
